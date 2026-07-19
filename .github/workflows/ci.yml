@@ -1,4 +1,4 @@
-name: CI Monorepo
+name: CI
 
 on:
   push:
@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './task-manager-frontend/package-lock.json'
-      - run: npm ci
+          cache-dependency-path: 'task-manager-frontend/package-lock.json'
+      - run: npm install
       - run: npm run lint
       - run: npm run build
       - run: npx vitest run --coverage src
@@ -37,8 +37,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './task-manager-frontend/package-lock.json'
-      - run: npm ci
+          cache-dependency-path: 'task-manager-frontend/package-lock.json'
+      - run: npm install
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test
 
@@ -54,6 +54,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: './task-manager-backend/package-lock.json'
-      - run: npm ci
+          cache-dependency-path: 'task-manager-backend/package-lock.json'
+      - run: npm install
+      - run: npx prisma generate
       - run: npx tsc --noEmit
