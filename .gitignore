@@ -1,0 +1,17 @@
+# Archivos de entorno (MUY IMPORTANTE para no subir contraseñas)
+.env
+.env.*
+!.env.example
+
+# Carpetas de editores/IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos del SO
+.DS_Store
+Thumbs.db
