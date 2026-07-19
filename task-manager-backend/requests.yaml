@@ -1,0 +1,232 @@
+opencollection: 1.0.0
+info:
+  name: Task Manager Diplomado FullStack 2026 - Modulo 1
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ''
+      port: ''
+      auth:
+        username: ''
+        password: ''
+      bypassProxy: ''
+items:
+  - info:
+      name: task
+      type: folder
+      seq: 1
+    request:
+      auth:
+        type: bearer
+        token: ''
+    items:
+      - info:
+          name: Delete Task
+          type: http
+          seq: 5
+        http:
+          method: DELETE
+          url: http://localhost:3000/api/v1/tasks/8
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Create Task
+          type: http
+          seq: 2
+        http:
+          method: POST
+          url: http://localhost:3000/api/v1/tasks
+          body:
+            type: json
+            data: |-
+              {
+                "title": "Nombre de la Tarea Ignacio Illanes", /// must be UNIQUE
+                "description": "Descripcion corta de la tarea",
+                "tags": ["Etiqueta UNO", "QUATRO"]
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get All Tasks
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: http://localhost:3000/api/v1/tasks
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Edit Task
+          type: http
+          seq: 3
+        http:
+          method: PUT
+          url: http://localhost:3000/api/v1/tasks/19
+          body:
+            type: json
+            data: |-
+              {
+                "title": "Nombre de la tarea Ignacio Illanes EDITADO",
+                "description": "Descripcion de la tarea EDITADA",
+                "tags": ["etiqueta uno", "CINCO"]
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Toggle Task
+          type: http
+          seq: 4
+        http:
+          method: PATCH
+          url: http://localhost:3000/api/v1/tasks/19/toggle
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: tag
+      type: folder
+      seq: 2
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Get All Tags
+          type: http
+          seq: 1
+        http:
+          method: GET
+          url: http://localhost:3000/api/v1/tags
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Create Tag
+          type: http
+          seq: 2
+        http:
+          method: POST
+          url: http://localhost:3000/api/v1/tags
+          body:
+            type: json
+            data: |-
+              {
+                "name": "Nombre de la etiqueta"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Update Tag
+          type: http
+          seq: 3
+        http:
+          method: PUT
+          url: http://localhost:3000/api/v1/tags/8
+          body:
+            type: json
+            data: |-
+              {
+                "name": "Nombre de la etiquita EDITADO"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Delete Tag
+          type: http
+          seq: 4
+        http:
+          method: DELETE
+          url: http://localhost:3000/api/v1/tags/8
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: auth
+      type: folder
+      seq: 3
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Register User
+          type: http
+          seq: 1
+        http:
+          method: POST
+          url: http://localhost:3000/api/v1/auth/register
+          body:
+            type: json
+            data: |-
+              {
+                "name": "Ignacio Illanes",
+                "email": "igui@example.com",
+                "password": "10i25r07d30L"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Login User
+          type: http
+          seq: 2
+        http:
+          method: POST
+          url: http://localhost:3000/api/v1/auth/login
+          body:
+            type: json
+            data: |-
+              {
+                "email": "igui@example.com",
+                "password": "10i25r07d30L"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    exportedAt: '2026-04-19T20:57:07.153Z'
+    exportedUsing: Bruno
