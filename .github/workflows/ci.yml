@@ -1,4 +1,4 @@
-name: CI
+name: CI Monorepo
 
 on:
   push:
@@ -7,40 +7,53 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    name: Lint & Build
+  frontend-build-test:
+    name: Frontend Lint, Build & Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./task-manager-frontend
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '24.14.0'
+          node-version: '20'
           cache: 'npm'
+          cache-dependency-path: './task-manager-frontend/package-lock.json'
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-
-  pruebas:
-    name: Pruebas unitarias y cobertura
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm ci
       - run: npx vitest run --coverage src
- 
-  e2e:
-    name: Pruebas E2E
+
+  frontend-e2e:
+    name: Frontend Pruebas E2E
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./task-manager-frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: './task-manager-frontend/package-lock.json'
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test
+
+  backend-build:
+    name: Backend Lint & Typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./task-manager-backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './task-manager-backend/package-lock.json'
+      - run: npm ci
+      - run: npx tsc --noEmit
