@@ -45,6 +45,9 @@ jobs:
   backend-build:
     name: Backend Lint & Typecheck
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
     defaults:
       run:
         working-directory: ./task-manager-backend
