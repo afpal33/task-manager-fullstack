@@ -93,3 +93,17 @@ jobs:
       - run: npm install
       - run: npx prisma generate
       - run: npx tsc --noEmit
+
+  deploy-staging:
+    name: Deploy a Staging
+    needs: [frontend-build-test, frontend-e2e, migraciones, backend-build]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar Railway CLI
+        run: npm install -g @railway/cli
+      - name: Desplegar a Railway (staging)
+        run: railway up --service backend --environment staging
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
