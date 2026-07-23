@@ -6,6 +6,8 @@ Aplicación fullstack de gestión de tareas con:
 - CI/CD con GitHub Actions
 - Despliegue orientado a contenedores y Docker
 
+[![CI](https://github.com/afpal33/task-manager-fullstack/actions/workflows/ci.yml/badge.svg)](https://github.com/afpal33/task-manager-fullstack/actions/workflows/ci.yml)
+
 ## Estructura del proyecto
 
 - [task-manager-frontend](task-manager-frontend): interfaz web
