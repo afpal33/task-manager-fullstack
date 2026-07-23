@@ -21,3 +21,15 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
  
 CMD ["nginx", "-g", "daemon off;"]
+
+# Etapa de pruebas
+FROM node:20-alpine AS test
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+
+CMD ["npm", "run", "test"]
