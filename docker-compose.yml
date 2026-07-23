@@ -40,6 +40,23 @@ services:
       - "5173:80"
     depends_on:
       - backend
+
+  backend-tests:
+    build: ./task-manager-backend
+    environment:
+      DATABASE_URL: postgresql://appuser:apppass@postgres:5432/appdb
+      PORT: 4000
+      JWT_SECRET: test-secret
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npm ci && npm run lint && npm run test"
+
+  frontend-tests:
+    build: ./task-manager-frontend
+    environment:
+      VITE_API_URL: http://localhost:4000
+    command: sh -c "npm ci && npm run test"
  
 volumes:
   postgres_data:
