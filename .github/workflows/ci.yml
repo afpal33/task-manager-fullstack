@@ -98,15 +98,18 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npx prisma generate
-      - run: npx tsc --noEmit
+      - run: npm run build
+      - run: npm run test:unit
 
   backend-tests:
     name: Backend Tests (Docker)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Levantar PostgreSQL para las pruebas
+        run: docker compose up -d postgres
       - name: Ejecutar pruebas del backend con Docker
-        run: docker compose run --rm --no-deps backend-tests
+        run: docker compose run --rm backend-tests
 
   frontend-tests:
     name: Frontend Tests (Docker)

@@ -36,6 +36,9 @@ test('authMiddleware rejects requests without a bearer token', () => {
 });
 
 test('authMiddleware accepts a valid bearer token and attaches the user', () => {
+  const originalJwtSecret = process.env.JWT_SECRET;
+  process.env.JWT_SECRET = 'test-secret';
+
   const token = jwt.sign({ userId: 42, email: 'test@example.com' }, 'test-secret');
   const req = { headers: { authorization: `Bearer ${token}` } } as Request;
   const res = createMockResponse();
@@ -44,7 +47,11 @@ test('authMiddleware accepts a valid bearer token and attaches the user', () => 
     nextCalled = true;
   };
 
-  authMiddleware(req, res, next);
+  try {
+    authMiddleware(req, res, next);
+  } finally {
+    process.env.JWT_SECRET = originalJwtSecret;
+  }
 
   assert.equal(nextCalled, true);
   assert.equal(req.user?.userId, 42);
