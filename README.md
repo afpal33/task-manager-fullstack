@@ -56,3 +56,8 @@ El backend espera variables como:
 
 El frontend espera:
 - `VITE_API_URL`
+
+
+---
+
+Repositorio de Fabrizio Palenque
